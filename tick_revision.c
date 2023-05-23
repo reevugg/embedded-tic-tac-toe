@@ -277,6 +277,26 @@ void printBoard() {
     printf("fml check: %c \n", fml);
 }
 
+void winlogic()
+              {
+	             int r1=board[0][0]*board[0][1]*board[0][2];
+	             int r2=board[1][0]*board[1][1]*board[1][2];
+	             int r3=board[2][0]*board[2][1]*board[2][2];
+	             
+	             int c1=board[0][0]*board[1][0]*board[2][0];
+	             int c2=board[0][1]*board[2][1]*board[2][1];
+	             int c3=board[0][2]*board[1][2]*board[2][2];
+	             
+	             int d1=board[0][0]*board[1][1]*board[2][1];
+	             int d2=board[0][2]*board[1][1]*board[2][0];
+	             
+	             if(r1==1||r2==1||r3==1||c1==1||c2==1||c3==1||d1==1||d2==1){printf("player A wins");}
+	             if(r1==8||r2==8||r3==8||c1==8||c2==8||c3==8||d1==8||d2==8){printf("player B wins");}
+	             
+	             //else{printf("World is scum\n");}
+	            
+	             
+              }
 int main() {
 	
     initialiseClock();
@@ -293,14 +313,17 @@ int main() {
     	        char key = keypad_scan();
     	        char f = key;
     	        boardout();
+    	        winlogic();
 
     	        if (key != '0') 
     	        {
     	           printf("Pressed key: %c \n", key);
+    	          
     	          game(key);
     	         
     	           
     	           printBoard();
+    	           
     	                
     	                // Clear the position of the "X" on the LCD
     	                lcd_clear(BACKGROUND_COLOUR);
