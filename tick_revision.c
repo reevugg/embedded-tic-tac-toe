@@ -46,7 +46,7 @@ int c1[]={105,10};
 int c2[]={105,55};
 int c3[]={105,100};
 int player=1;
-int fml=0;
+int fml=2;
 int board[3][3]={{ 0, 0, 0},
                  { 0, 0, 0},
                  { 0, 0, 0}};
@@ -207,35 +207,35 @@ char keypad_scan() {
     return '0';
 }
 void game(char sw)
-              {  if(player=1){
-	             if(sw=='1'&& board[0][0]==0){board[0][0]=1;}
-	             if(sw=='2'&& board[0][1]==0){board[0][1]=1;}
-	             if(sw=='3'&& board[0][2]==0){board[0][2]=1;}
-	             if(sw=='4'&& board[1][0]==0){board[1][0]=1;}
-	             if(sw=='5'&& board[1][1]==0){board[1][1]=1;}
-	             if(sw=='6'&& board[1][2]==0){board[1][2]=1;}
-	             if(sw=='7'&& board[2][0]==0){board[2][0]=1;}
-	             if(sw=='8'&& board[2][1]==0){board[2][1]=1;}
-	             if(sw=='9'&& board[2][2]==0){board[2][2]=1;}
+              {  if(fml==1){
+	             if(sw=='1'&& board[0][0]==0){board[0][0]=1;fml=2;}
+	             if(sw=='2'&& board[0][1]==0){board[0][1]=1;fml=2;}
+	             if(sw=='3'&& board[0][2]==0){board[0][2]=1;fml=2;}
+	             if(sw=='4'&& board[1][0]==0){board[1][0]=1;fml=2;}
+	             if(sw=='5'&& board[1][1]==0){board[1][1]=1;fml=2;}
+	             if(sw=='6'&& board[1][2]==0){board[1][2]=1;fml=2;}
+	             if(sw=='7'&& board[2][0]==0){board[2][0]=1;fml=2;}
+	             if(sw=='8'&& board[2][1]==0){board[2][1]=1;fml=2;}
+	             if(sw=='9'&& board[2][2]==0){board[2][2]=1;fml=2;}
 	             if(sw=='*'){reset();}
 	             if(sw=='A'){fml=1;}
 	             if(sw=='B'){fml=2;}
-	             player=2;
+	             //fml=2;
                               }
-              if(player=2){
-              	             if(sw=='1'&& board[0][0]==0){board[0][0]=2;}
-              	             if(sw=='2'&& board[0][1]==0){board[0][1]=2;}
-              	             if(sw=='3'&& board[0][2]==0){board[0][2]=2;}
-              	             if(sw=='4'&& board[1][0]==0){board[1][0]=2;}
-              	             if(sw=='5'&& board[1][1]==0){board[1][1]=2;}
-              	             if(sw=='6'&& board[1][2]==0){board[1][2]=2;}
-              	             if(sw=='7'&& board[2][0]==0){board[2][0]=2;}
-              	             if(sw=='8'&& board[2][1]==0){board[2][1]=2;}
-              	             if(sw=='9'&& board[2][2]==0){board[2][2]=2;}
+              if(fml==2){
+              	             if(sw=='1'&& board[0][0]==0){board[0][0]=2;fml=1;}
+              	             if(sw=='2'&& board[0][1]==0){board[0][1]=2;fml=1;}
+              	             if(sw=='3'&& board[0][2]==0){board[0][2]=2;fml=1;}
+              	             if(sw=='4'&& board[1][0]==0){board[1][0]=2;fml=1;}
+              	             if(sw=='5'&& board[1][1]==0){board[1][1]=2;fml=1;}
+              	             if(sw=='6'&& board[1][2]==0){board[1][2]=2;fml=1;}
+              	             if(sw=='7'&& board[2][0]==0){board[2][0]=2;fml=1;}
+              	             if(sw=='8'&& board[2][1]==0){board[2][1]=2;fml=1;}
+              	             if(sw=='9'&& board[2][2]==0){board[2][2]=2;fml=1;}
               	             if(sw=='*'){reset();}
-              	             if(sw=='C'){fml=1;}
+              	             if(sw=='A'){fml=1;}
               	             if(sw=='B'){fml=2;}
-              	             player=1;
+              	             //fml=1;
                           }
               }
 void boardout()
@@ -251,15 +251,16 @@ void boardout()
 	            if(board[2][2]==1){xc3();}
 	            if(board[0][0]==1){xa1();}
 	            
-	            	            if(board[0][1]==2){oa2();}
-	            	            if(board[0][2]==2){oa3();}
-	            	            if(board[1][0]==2){ob1();}
-	            	            if(board[1][1]==2){ob2();}
-	            	            if(board[1][2]==2){ob3();}
-	            	            if(board[2][0]==2){oc1();}
-	            	            if(board[2][1]==2){oc2();}
-	            	            if(board[2][2]==2){oc3();}
-	            
+	            if(board[0][0]==2){oa1();}	            
+	            if(board[0][1]==2){oa2();}
+	            if(board[0][2]==2){oa3();}
+	            if(board[1][0]==2){ob1();}
+	            if(board[1][1]==2){ob2();}
+	            if(board[1][2]==2){ob3();}
+	            if(board[2][0]==2){oc1();}
+	            if(board[2][1]==2){oc2();}
+	            if(board[2][2]==2){oc3();}
+	            	            
 	
               }
 void printBoard() {
