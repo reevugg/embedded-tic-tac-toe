@@ -32,7 +32,7 @@
 
 #define COL1 (1<<1)
 #define COL2 (1<<3)
-#define COL3 (1<<12)
+#define COL3 (1<<4)
 #define COL4 (1<<2)
 
 
@@ -52,6 +52,8 @@ int board[3][3]={{ 0, 0, 0},
                  { 0, 0, 0},
                  { 0, 0, 0}};
 void reset(){  int i, j;
+               winpunk=0;
+               lcd_clear(BACKGROUND_COLOUR);
                 for (i = 0; i < 3; i++) {
                                             for (j = 0; j < 3; j++) {
                                                                         board[i][j]=0;
@@ -86,7 +88,8 @@ void ob3(){lcd_putStr("O",  b3[0],b3[1],FontLarge, WHITE, TEAL);}
 void oc1(){lcd_putStr("O",  c1[0],c1[1],FontLarge, WHITE, TEAL);}
 void oc2(){lcd_putStr("O",  c2[0],c2[1],FontLarge, WHITE, TEAL);}
 void oc3(){lcd_putStr("O",  c3[0],c3[1],FontLarge, WHITE, TEAL);}
-
+void ggd(){lcd_putStr("Player A wins",  a2[0],a2[1],FontLarge, WHITE, TEAL);}
+void ggdd(){lcd_putStr("Player B wins",  a2[0],a2[1],FontLarge, WHITE, TEAL);}
 void grid()
           {  lcd_drawLine(0, 40, 150, 40, WHITE);//HORIZONTAL 1
              lcd_drawLine(40, 0, 40 , 150, WHITE);//VERTICAL 1
@@ -130,13 +133,13 @@ void keypad_init() {
     // Configure column pins 
 	PORTD_PCR1 = PORT_PCR_MUX(1)|PORT_PCR_DSE_MASK| PORT_PCR_PE_MASK | PORT_PCR_PS_MASK;//COL 1
 	PORTD_PCR3 = PORT_PCR_MUX(1)|PORT_PCR_DSE_MASK| PORT_PCR_PE_MASK | PORT_PCR_PS_MASK;//COL 2
-	PORTA_PCR12 = PORT_PCR_MUX(1)|PORT_PCR_DSE_MASK| PORT_PCR_PE_MASK | PORT_PCR_PS_MASK;//COL 3
+	PORTD_PCR4 = PORT_PCR_MUX(1)|PORT_PCR_DSE_MASK| PORT_PCR_PE_MASK | PORT_PCR_PS_MASK;//COL 3
 	PORTC_PCR2 = PORT_PCR_MUX(1)|PORT_PCR_DSE_MASK| PORT_PCR_PE_MASK | PORT_PCR_PS_MASK;// COL4 
 	
 	// Set the direction of column pins as outputs
-	GPIOD_PDDR |= (COL1 | COL2);
+	GPIOD_PDDR |= (COL1 | COL2 | COL3);
 	GPIOC_PDDR |= COL4;
-	GPIOA_PDDR |= COL3;
+	
 
 	// Set the direction of row pins as inputs
 	GPIOC_PDDR &= ~(ROW4 | ROW2 | ROW1);
@@ -164,7 +167,7 @@ char keypad_scan() {
                 GPIOD_PCOR |= COL2;
                 break;
             case 2:
-                GPIOA_PCOR |= COL3;
+                GPIOD_PCOR |= COL3;
                 break;
             case 3:
                 GPIOC_PCOR |= COL4;
@@ -198,7 +201,7 @@ char keypad_scan() {
                 GPIOD_PSOR |= COL2;
                 break;
             case 2:
-                GPIOA_PSOR |= COL3;
+                GPIOD_PSOR |= COL3;
                 break;
             case 3:
                 GPIOC_PSOR |= COL4;
@@ -241,29 +244,49 @@ void game(char sw)
                           }
               }
 void boardout()
-              {  grid();//show grid
-	            if(board[0][0]==1){xa1();}
-	            if(board[0][1]==1){xa2();}
-	            if(board[0][2]==1){xa3();}
-	            if(board[1][0]==1){xb1();}
-	            if(board[1][1]==1){xb2();}
-	            if(board[1][2]==1){xb3();}
-	            if(board[2][0]==1){xc1();}
-	            if(board[2][1]==1){xc2();}
-	            if(board[2][2]==1){xc3();}
-	            if(board[0][0]==1){xa1();}
+              { 
+	if(winpunk==0)
+                 { 
+              
+	                grid();//show grid
+	                if(board[0][0]==1){xa1();}
+	                if(board[0][1]==1){xa2();}
+	                if(board[0][2]==1){xa3();}
+	                if(board[1][0]==1){xb1();}
+	                if(board[1][1]==1){xb2();}
+	                if(board[1][2]==1){xb3();}
+	                if(board[2][0]==1){xc1();}
+	                if(board[2][1]==1){xc2();}
+	                if(board[2][2]==1){xc3();}
+	                if(board[0][0]==1){xa1();}
 	            
-	            if(board[0][0]==2){oa1();}	            
-	            if(board[0][1]==2){oa2();}
-	            if(board[0][2]==2){oa3();}
-	            if(board[1][0]==2){ob1();}
-	            if(board[1][1]==2){ob2();}
-	            if(board[1][2]==2){ob3();}
-	            if(board[2][0]==2){oc1();}
-	            if(board[2][1]==2){oc2();}
-	            if(board[2][2]==2){oc3();}
-	            	            
-	
+	                if(board[0][0]==2){oa1();}	            
+	                if(board[0][1]==2){oa2();}
+	                if(board[0][2]==2){oa3();}
+	                if(board[1][0]==2){ob1();}
+	                if(board[1][1]==2){ob2();}
+	                if(board[1][2]==2){ob3();}
+	                if(board[2][0]==2){oc1();}
+	                if(board[2][1]==2){oc2();}
+	                if(board[2][2]==2){oc3();}
+	             }
+	if(winpunk==1)
+	    	      {
+	    	       printf("player A wins");
+	    	       ggd();
+	    	       //lcd_clear(BACKGROUND_COLOUR);
+	    	       //reset();
+	    	       //put buzzer here
+	    	            	        	                
+	    	      }      	                         
+	  if(winpunk==2)
+	    	      {
+	    	        printf("player B wins");
+	    	       ggdd();
+	    	       //lcd_clear(BACKGROUND_COLOUR);
+	    	        //reset();
+	    	       //put buzzer here
+	    	      }
               }
 void printBoard() {
   
@@ -290,11 +313,11 @@ void winlogic()
 	             int c2=board[0][1]*board[2][1]*board[2][1];
 	             int c3=board[0][2]*board[1][2]*board[2][2];
 	             
-	             int d1=board[0][0]*board[1][1]*board[2][1];
+	             int d1=board[0][0]*board[1][1]*board[2][2];
 	             int d2=board[0][2]*board[1][1]*board[2][0];
 	             
-	             if(r1==1||r2==1||r3==1||c1==1||c2==1||c3==1||d1==1||d2==1){printf("A is punked");winpunk=1;}
-	             if(r1==8||r2==8||r3==8||c1==8||c2==8||c3==8||d1==8||d2==8){printf("B is punked");winpunk=2;}
+	             if(r1==1||r2==1||r3==1||c1==1||c2==1||c3==1||d1==1||d2==1){winpunk=1;}
+	             if(r1==8||r2==8||r3==8||c1==8||c2==8||c3==8||d1==8||d2==8){winpunk=2;}
 	             
 	             //else{printf("World is scum\n");}
 	            
@@ -315,22 +338,8 @@ int main() {
     	
     	        char key = keypad_scan();
     	        char f = key;
-    	                           if(winpunk==0){
-    	                        	               boardout();//shows board in display
-    	            	                         }
-    	            	           if(winpunk==1)
-    	            	                         {
-    	            	        	                printf("player A wins");
-    	            	                         }
-    	            	           if(winpunk==2)
-    	            	                         {
-    	            	        	                printf("player B wins");
-    	            	                         }
-    	        
-    	        boardout();//shows board in display
-    	        
     	        winlogic();
-
+                boardout();//shows board in display
     	        if (key != '0') 
     	        {
     	           printf("Pressed key: %c \n", key);
