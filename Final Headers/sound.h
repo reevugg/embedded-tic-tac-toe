@@ -51,7 +51,7 @@ void delayMs( unsigned int delay)
 void initialisePINs(void)
 {
 	//makes sure clock runs at 48MHz
-	clock_initialise();
+	initialiseClock();
 	
 	// Enable clock to PORTE
 	SIM_SCGC5 |=SIM_SCGC5_PORTE_MASK;
@@ -101,7 +101,7 @@ void playTone (int frequency, int time_ms)
 }
 
 
-
+/*
 int main(void)
 {
 
@@ -126,3 +126,4 @@ int main(void)
 	
 	return 0;
 }
+*/
